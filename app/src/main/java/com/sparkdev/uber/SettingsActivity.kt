@@ -11,10 +11,6 @@ class SettingsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.settings_activity)
-        supportFragmentManager
-            .beginTransaction()
-            .replace(R.id.settings, SettingsFragment())
-            .commit()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         val userName: TextView = findViewById(R.id.userName)
         val userEmail: TextView = findViewById(R.id.userEmail)
@@ -27,6 +23,9 @@ class SettingsActivity : AppCompatActivity() {
         signOutButton.setOnClickListener {
             signOut()
         }
+        editProfileButton.setOnClickListener {
+            editProfile()
+        }
     }
 
     private fun signOut() {
@@ -34,9 +33,10 @@ class SettingsActivity : AppCompatActivity() {
         // do sign out stuff
     }
 
-    class SettingsFragment : PreferenceFragmentCompat() {
-        override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
-            setPreferencesFromResource(R.xml.root_preferences, rootKey)
-        }
+    private fun editProfile() {
+        /*
+        @TODO Make new activity for editing profile.
+         */
     }
+
 }
