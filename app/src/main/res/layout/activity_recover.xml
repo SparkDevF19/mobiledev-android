@@ -4,21 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".RegisterActivity">
+    tools:context=".RecoverActivity">
 
     <ScrollView
-        android:id="@+id/scrollView2"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical" >
 
             <LinearLayout
                 android:id="@+id/linearLayout"
@@ -32,7 +27,7 @@
                     android:layout_height="match_parent">
 
                     <ImageView
-                        android:id="@+id/registerBackButton"
+                        android:id="@+id/recoverBackButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="20dp"
@@ -42,7 +37,7 @@
                         app:srcCompat="@drawable/backarrow" />
 
                     <ImageView
-                        android:id="@+id/imageView2"
+                        android:id="@+id/logo"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -50,21 +45,20 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:srcCompat="@drawable/logo" />
-
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="30dp"
                 android:layout_marginTop="30dp"
+                android:layout_marginLeft="30dp"
                 android:layout_marginRight="30dp"
                 android:orientation="vertical">
 
 
                 <EditText
-                    android:id="@+id/regEmail"
+                    android:id="@+id/recoveryEmail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
@@ -73,76 +67,34 @@
                     android:hint="Email"
                     android:inputType="textEmailAddress" />
 
-                <EditText
-                    android:id="@+id/regPassword"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginBottom="15dp"
-                    android:ems="10"
-                    android:hint="Password"
-                    android:inputType="textPassword" />
-
-                <EditText
-                    android:id="@+id/regName"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginBottom="15dp"
-                    android:ems="10"
-                    android:hint="First Name"
-                    android:inputType="textPersonName" />
-
-                <EditText
-                    android:id="@+id/regLast"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginBottom="15dp"
-                    android:ems="10"
-                    android:hint="Last Name"
-                    android:inputType="textPersonName" />
-
-                <EditText
-                    android:id="@+id/regPostal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginBottom="15dp"
-                    android:ems="10"
-                    android:hint="Postal Code"
-                    android:inputType="textPersonName" />
 
                 <RelativeLayout
                     android:id="@+id/RelativeLayout01"
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginBottom="20dp">
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="15dp">
 
                     <Button
-                        android:id="@+id/regButton"
-                        android:layout_width="169dp"
+                        android:id="@+id/recoveryButton"
+                        android:layout_width="180dp"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
                         android:background="@drawable/rounded_corner_button"
-                        android:text="Register"
+                        android:hapticFeedbackEnabled="false"
+                        android:text="Send Reset Email"
                         android:textColor="@android:color/white" />
+
                 </RelativeLayout>
 
-                <TextView
-                    android:id="@+id/regSend"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="40dp"
-                    android:text="Already have an account? Log in here" />
+
             </LinearLayout>
 
         </LinearLayout>
     </ScrollView>
 
     <ProgressBar
-        android:id="@+id/regProgressBar"
+        android:id="@+id/recoverProgressBar"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

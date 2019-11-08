@@ -3,7 +3,9 @@ package com.sparkdev.uber
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.util.Patterns
+import android.view.View
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -20,17 +22,35 @@ class LoginActivity : AppCompatActivity() {
 
         auth = FirebaseAuth.getInstance()
 
-        regButton.setOnClickListener {
+
+        loginSend.setOnClickListener{
             startActivity(Intent(this, RegisterActivity::class.java))
             finish()
         }
 
-        loginButton.setOnClickListener {
+        loginButton.setOnClickListener{
             doLogin()
         }
+
+        loginRecover.setOnClickListener {
+            startActivity(Intent(this, RecoverActivity::class.java))
+            finish()
+        }
+
+    }
+
+    public override fun onStart() {
+        super.onStart()
+        // Check if user is signed in (non-null) and update UI accordingly.
+        val currentUser = auth.currentUser
+        if (currentUser != null) {
+            updateUI(currentUser)
+        }
+
     }
 
     private fun doLogin(){
+        //checks for empty or invalid input
         if(loginEmail.text.toString().isEmpty()){        //if email is empty
             loginEmail.error = "Please enter your email"
             loginEmail.requestFocus()
@@ -47,24 +67,22 @@ class LoginActivity : AppCompatActivity() {
             return
         }
 
+        //Signs the user in
+        loginProgressBar.visibility= View.VISIBLE
+        
         auth.signInWithEmailAndPassword(loginEmail.text.toString(), loginPassword.text.toString())
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     // Sign in success
+                    Log.d("MyLog", "success with log in")
                     val user = auth.currentUser
                     updateUI(user)
                 } else {
-                    // If sign in fails, display a message to the user
-                    updateUI(null)
+                    loginPassword.error = "Wrong password/email"
+                    loginPassword.requestFocus()
+                    loginRecover.visibility = View.VISIBLE
                 }
             }
-    }
-
-    public override fun onStart() {
-        super.onStart()
-        // Check if user is signed in (non-null) and update UI accordingly.
-        val currentUser = auth.currentUser
-        updateUI(currentUser)
     }
 
     private fun updateUI (currentUser : FirebaseUser?){
@@ -73,16 +91,13 @@ class LoginActivity : AppCompatActivity() {
                 startActivity(Intent(this, DashboardActivity::class.java))
                 finish()
             } else {
-                Toast.makeText(
-                    baseContext, "Please verify your email", Toast.LENGTH_LONG
-                ).show()
+                Toast.makeText(baseContext, "Please verify your email", Toast.LENGTH_LONG).show()
+                loginRecover.visibility = View.VISIBLE
             }
         } else {
-            Toast.makeText(baseContext, "Login failed.",
-                Toast.LENGTH_SHORT).show()
-
+            Toast.makeText(baseContext, "Login failed.", Toast.LENGTH_SHORT).show()
+            loginProgressBar.visibility= View.GONE
         }
     }
-
 
 }
