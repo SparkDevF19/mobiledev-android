@@ -69,7 +69,7 @@ class LoginActivity : AppCompatActivity() {
 
         //Signs the user in
         loginProgressBar.visibility= View.VISIBLE
-        
+
         auth.signInWithEmailAndPassword(loginEmail.text.toString(), loginPassword.text.toString())
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
@@ -81,6 +81,7 @@ class LoginActivity : AppCompatActivity() {
                     loginPassword.error = "Wrong password/email"
                     loginPassword.requestFocus()
                     loginRecover.visibility = View.VISIBLE
+                    loginProgressBar.visibility= View.GONE
                 }
             }
     }
