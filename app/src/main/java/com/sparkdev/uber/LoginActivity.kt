@@ -15,6 +15,8 @@ import kotlinx.android.synthetic.main.activity_register.*
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
+    var isPressed: Boolean = false //this will help prevent the user from pressing the button multiple times while
+                                    //the app is waiting for the server to respond
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,7 +31,12 @@ class LoginActivity : AppCompatActivity() {
         }
 
         loginButton.setOnClickListener{
-            doLogin()
+            if (!isPressed) {
+                Log.d("myLog", "Button is pressed")
+                isPressed = true
+
+                doLogin()
+            }
         }
 
         loginRecover.setOnClickListener {
@@ -54,16 +61,19 @@ class LoginActivity : AppCompatActivity() {
         if(loginEmail.text.toString().isEmpty()){        //if email is empty
             loginEmail.error = "Please enter your email"
             loginEmail.requestFocus()
+            isPressed = false
             return
         }
         if (!Patterns.EMAIL_ADDRESS.matcher(loginEmail.text.toString()).matches()) {    //if the email entered doesn't follow an email pattern
             loginEmail.error = "Please enter a valid email"
             loginEmail.requestFocus()
+            isPressed = false
             return
         }
         if (loginPassword.text.toString().isEmpty()){       //if password is empty
             loginPassword.error = "Please enter you password"
             loginPassword.requestFocus()
+            isPressed = false
             return
         }
 
@@ -80,8 +90,9 @@ class LoginActivity : AppCompatActivity() {
                 } else {
                     loginPassword.error = "Wrong password/email"
                     loginPassword.requestFocus()
-                    loginRecover.visibility = View.VISIBLE
                     loginProgressBar.visibility= View.GONE
+
+                    isPressed = false
                 }
             }
     }
@@ -93,11 +104,12 @@ class LoginActivity : AppCompatActivity() {
                 finish()
             } else {
                 Toast.makeText(baseContext, "Please verify your email", Toast.LENGTH_LONG).show()
-                loginRecover.visibility = View.VISIBLE
+                isPressed = false
             }
         } else {
             Toast.makeText(baseContext, "Login failed.", Toast.LENGTH_SHORT).show()
             loginProgressBar.visibility= View.GONE
+            isPressed = false
         }
     }
 

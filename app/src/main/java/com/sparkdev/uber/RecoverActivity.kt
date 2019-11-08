@@ -3,6 +3,7 @@ package com.sparkdev.uber
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.util.Patterns
 import android.view.View
 import android.widget.Toast
@@ -18,6 +19,8 @@ class RecoverActivity : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
 
+    var isPressed: Boolean = false;
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_recover)
@@ -29,30 +32,43 @@ class RecoverActivity : AppCompatActivity() {
             finish()
         }
         recoveryButton.setOnClickListener {
-            val email = recoveryEmail.text.toString()
-            if (email.isEmpty()){
-                recoveryEmail.error = "Please enter your email"
-                recoveryEmail.requestFocus()
-                return@setOnClickListener
-            }
-            if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
-                recoveryEmail.error = "Please enter a valid email"
-                recoveryEmail.requestFocus()
-                return@setOnClickListener
-            }
-            recoverProgressBar.visibility= View.VISIBLE
+            if (!isPressed) {
+                Log.d("myLog", "Button is pressed")
+                isPressed = true
 
-            auth.sendPasswordResetEmail(email)
-                .addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
-                        Toast.makeText(baseContext, "reset email sent", Toast.LENGTH_SHORT).show()
-                        startActivity(Intent(this, LoginActivity::class.java))
-                        finish()
-                    }else {
-                        Toast.makeText(baseContext, "Failed to send reset email", Toast.LENGTH_SHORT).show()
-                        loginProgressBar.visibility= View.GONE
-                    }
+                val email = recoveryEmail.text.toString()
+                if (email.isEmpty()) {
+                    recoveryEmail.error = "Please enter your email"
+                    recoveryEmail.requestFocus()
+                    isPressed = false
+                    return@setOnClickListener
                 }
+                if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                    recoveryEmail.error = "Please enter a valid email"
+                    recoveryEmail.requestFocus()
+                    isPressed = false
+                    return@setOnClickListener
+                }
+                recoverProgressBar.visibility = View.VISIBLE
+
+                auth.sendPasswordResetEmail(email)
+                    .addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            Toast.makeText(baseContext, "reset email sent", Toast.LENGTH_SHORT)
+                                .show()
+                            startActivity(Intent(this, LoginActivity::class.java))
+                            finish()
+                        } else {
+                            Toast.makeText(
+                                baseContext,
+                                "Failed to send reset email",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            loginProgressBar.visibility = View.GONE
+                            isPressed = false
+                        }
+                    }
+            }
         }
 
     }

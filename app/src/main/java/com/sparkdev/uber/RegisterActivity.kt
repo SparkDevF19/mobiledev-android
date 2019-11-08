@@ -3,6 +3,7 @@ package com.sparkdev.uber
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.util.Patterns
 import android.view.View
 import android.widget.Toast
@@ -20,6 +21,8 @@ class RegisterActivity : AppCompatActivity() {
     private lateinit var database: FirebaseDatabase
     private lateinit var dbReference: DatabaseReference
 
+    var isPressed: Boolean = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
@@ -35,7 +38,12 @@ class RegisterActivity : AppCompatActivity() {
             finish()
         }
         regButton.setOnClickListener {
-            createNewAccount()
+            if (!isPressed) {
+                Log.d("myLog", "Button is pressed")
+                isPressed = true
+
+                createNewAccount()
+            }
         }
         registerBackButton.setOnClickListener{
             startActivity(Intent(this, LoginActivity::class.java))
@@ -56,21 +64,27 @@ class RegisterActivity : AppCompatActivity() {
         if (email.isEmpty()) {
             regEmail.error = "Please enter your Email"
             regEmail.requestFocus()
+            isPressed = false
         }else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {       //if the input doesn't follow an email pattern
             regEmail.error = "Please enter a valid email"
             regEmail.requestFocus()
+            isPressed = false
         }else if (password.isEmpty()) {
             regPassword.error = "Please enter your Password"
             regPassword.requestFocus()
+            isPressed = false
         }else if (name.isEmpty()) {
             regEmail.error = "Please enter your Name"
             regEmail.requestFocus()
+            isPressed = false
         }else if (lastName.isEmpty()) {
             regName.error = "Please enter your Last Name"
             regName.requestFocus()
+            isPressed = false
         } else if (postal.isEmpty()) {
             regPostal.error = "Please enter your Postal Code"
             regPostal.requestFocus()
+            isPressed = false
         } else {
 
         regProgressBar.visibility= View.VISIBLE
@@ -86,6 +100,7 @@ class RegisterActivity : AppCompatActivity() {
                         ?.addOnCompleteListener { task ->
                             if (!task.isSuccessful) {
                                 Toast.makeText(baseContext, "Email Verification failed.", Toast.LENGTH_SHORT).show()
+                                isPressed = false
                             }
                         }
 
@@ -105,6 +120,7 @@ class RegisterActivity : AppCompatActivity() {
                 } else {
                     Toast.makeText(baseContext, "Registration failed. Try again later", Toast.LENGTH_SHORT).show()
                     regProgressBar.visibility = View.GONE
+                    isPressed = false
                 }
             }
         }
