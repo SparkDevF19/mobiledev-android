@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "624423400461",
+    "firebase_url": "https://ridefiu-android.firebaseio.com",
+    "project_id": "ridefiu-android",
+    "storage_bucket": "ridefiu-android.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:624423400461:android:dc3bfc7aa8d74bf6759144",
+        "android_client_info": {
+          "package_name": "com.sparkdev.uber"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "624423400461-bf6818e3sn69jhqnnl873b11tu6oosar.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.sparkdev.uber",
+            "certificate_hash": "2d7a9da087b08cffcd1dd859bf0401b1f37310fc"
+          }
+        },
+        {
+          "client_id": "624423400461-nug3l8juhaotmiodm8dl9mqdnlekun87.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCIlRwb_6JTYQrfsKRfaVgJ0oruG7X6Yek"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "624423400461-nug3l8juhaotmiodm8dl9mqdnlekun87.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
