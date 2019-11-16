@@ -2,5 +2,7 @@
     <string name="app_name">Uber</string>
     <string name="map_key" translatable="false"> AIzaSyB_qsP8AOP_P0MdlPz-48TDaJYjTP3vbjo </string>
     <string name="title_activity_maps">Map</string>
+    <string name="where_to">Where To?</string>
+    <string name="search">Search</string>
 
 </resources>

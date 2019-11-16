@@ -4,9 +4,14 @@ import android.app.Activity
 import android.content.Intent
 import android.content.IntentSender
 import android.content.pm.PackageManager
+import android.location.Address
+import android.location.Geocoder
 import android.location.Location
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import android.widget.EditText
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException
 import com.google.android.gms.common.GooglePlayServicesRepairableException
@@ -20,8 +25,7 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import kotlinx.android.synthetic.main.activity_maps.*
+import java.io.IOException
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
 
@@ -216,5 +220,37 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
 //            val FIU = LatLng(-25.8, -80.4)
 //            mMap.addMarker(MarkerOptions().position(FIU).title("Marker in Florida International University"))
 //            mMap.moveCamera(CameraUpdateFactory.newLatLng(FIU))
+    }
+
+    // used to search for whatever location the user types in the search box, using geocoding
+    fun searchLocation(view: View) {
+        val locationSearch: EditText = findViewById(R.id.search_location)
+        lateinit var location: String
+
+        // extract the string from the search box
+        location = locationSearch.text.toString()
+        var addressList: List<Address>? = null
+
+        if (location == null || location == "") {
+            Toast.makeText(applicationContext, "Please provide a location", Toast.LENGTH_SHORT).show()
+        } else {
+            val geoCoder = Geocoder(this)
+            try {
+                addressList = geoCoder.getFromLocationName(location, 1)
+
+            } catch (e: IOException) {
+                e.printStackTrace()
+            }
+            // add location to list of addresses and place a marker on the location that the user typed in
+            val address = addressList!![0]
+            val latLng = LatLng(address.latitude, address.longitude)
+            mMap.addMarker(MarkerOptions().position(latLng).title(location))
+            mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng))
+            // Toast.makeText(
+            //     applicationContext,
+            //     address.latitude.toString() + " " + address.longitude,
+            //     Toast.LENGTH_LONG
+            // ).show()
+        }
     }
 }
