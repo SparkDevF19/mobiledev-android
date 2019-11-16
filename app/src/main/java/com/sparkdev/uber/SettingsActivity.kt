@@ -1,5 +1,6 @@
 package com.sparkdev.uber
 
+import android.content.Intent
 import android.media.Image
 import android.os.Bundle
 import android.widget.*
@@ -34,9 +35,8 @@ class SettingsActivity : AppCompatActivity() {
     }
 
     private fun editProfile() {
-        /*
-        @TODO Make new activity for editing profile.
-         */
+        val intent: Intent = Intent(this, EditProfileActivity::class.java)
+        startActivity(intent)
     }
 
 }

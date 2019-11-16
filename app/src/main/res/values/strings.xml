@@ -24,4 +24,6 @@
     <string name="user_email">PlaceholderEmail</string>
     <string name="edit_profile_button">Edit Profile</string>
     <string name="sign_out_button">Sign Out...</string>
+    <string name="change_email_text">Change E-mail:</string>
+    <string name="change_name_text">Change Name:</string>
 </resources>
