@@ -66,12 +66,11 @@ class RecoverActivity : AppCompatActivity() {
                             ).show()
                             loginProgressBar.visibility = View.GONE
                             isPressed = false
+                            return@addOnCompleteListener
                         }
                     }
             }
         }
 
     }
-
-
 }

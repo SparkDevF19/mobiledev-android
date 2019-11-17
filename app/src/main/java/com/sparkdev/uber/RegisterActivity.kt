@@ -58,6 +58,7 @@ class RegisterActivity : AppCompatActivity() {
         val password: String = regPassword.text.toString()
         val name: String = regName.text.toString()
         val lastName: String = regLast.text.toString()
+        val phone: String = regPhone.text.toString()
         val postal: String = regPostal.text.toString()
 
         //The following check for each box to see if empty and return if so.
@@ -81,7 +82,12 @@ class RegisterActivity : AppCompatActivity() {
             regName.error = "Please enter your Last Name"
             regName.requestFocus()
             isPressed = false
-        } else if (postal.isEmpty()) {
+        }else if (phone.isEmpty()) {
+            regName.error = "Please enter your Last Name"
+            regName.requestFocus()
+            isPressed = false
+        }
+        else if (postal.isEmpty()) {
             regPostal.error = "Please enter your Postal Code"
             regPostal.requestFocus()
             isPressed = false
@@ -108,9 +114,10 @@ class RegisterActivity : AppCompatActivity() {
                     val userBD = dbReference.child(user?.uid!!)
 
                     userBD.child("Email").setValue(email)
-                    userBD.child("Name").setValue(name)
-                    userBD.child("LastName").setValue(lastName)
-                    userBD.child("PostalCode").setValue(postal)
+                    userBD.child("First_Name").setValue(name)
+                    userBD.child("Last_Name").setValue(lastName)
+                    userBD.child("Phone_Number").setValue(phone)
+                    userBD.child("Postal_Code").setValue(postal)
 
 
                     //start Login activity
