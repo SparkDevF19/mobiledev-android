@@ -1,3 +1,4 @@
+/*
 package com.sparkdev.uber
 
 import androidx.test.platform.app.InstrumentationRegistry
@@ -22,3 +23,6 @@ class ExampleInstrumentedTest {
         assertEquals("com.sparkdev.uber", appContext.packageName)
     }
 }
+
+
+*/
