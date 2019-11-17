@@ -54,17 +54,19 @@ class RecoverActivity : AppCompatActivity() {
                 auth.sendPasswordResetEmail(email)
                     .addOnCompleteListener { task ->
                         if (task.isSuccessful) {
+                            Log.d("myLog", "success to send the recovery email")
                             Toast.makeText(baseContext, "reset email sent", Toast.LENGTH_SHORT)
                                 .show()
                             startActivity(Intent(this, LoginActivity::class.java))
                             finish()
                         } else {
+                            Log.d("myLog", "failed to send recovery email")
                             Toast.makeText(
                                 baseContext,
                                 "Failed to send reset email",
                                 Toast.LENGTH_SHORT
                             ).show()
-                            loginProgressBar.visibility = View.GONE
+                            recoverProgressBar.visibility = View.GONE
                             isPressed = false
                             return@addOnCompleteListener
                         }

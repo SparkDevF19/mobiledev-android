@@ -10,8 +10,8 @@ import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
-import kotlinx.android.synthetic.main.activity_recover.*
 import kotlinx.android.synthetic.main.activity_register.*
+
 
 
 class RegisterActivity : AppCompatActivity() {
@@ -55,43 +55,30 @@ class RegisterActivity : AppCompatActivity() {
     //password needs to be larger than 6 characters
     private fun createNewAccount() {
         val email: String = regEmail.text.toString()
-        val password: String = regPassword.text.toString()
+        val password: String = regPassword.text.toString().trim()
         val name: String = regName.text.toString()
         val lastName: String = regLast.text.toString()
         val phone: String = regPhone.text.toString()
         val postal: String = regPostal.text.toString()
 
-        //The following check for each box to see if empty and return if so.
-        if (email.isEmpty()) {
-            regEmail.error = "Please enter your Email"
-            regEmail.requestFocus()
+
+        if (email.isEmpty() || password.isEmpty() || name.isEmpty() || lastName.isEmpty() || phone.isEmpty() || postal.isEmpty()){  //checks for empty input
+            Toast.makeText(baseContext, "Please, Fill in all the boxes", Toast.LENGTH_SHORT).show()
             isPressed = false
-        }else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {       //if the input doesn't follow an email pattern
+        } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {      //checks if the email is valid
             regEmail.error = "Please enter a valid email"
             regEmail.requestFocus()
             isPressed = false
-        }else if (password.isEmpty()) {
-            regPassword.error = "Please enter your Password"
+        } else if (password.length < 8 || password.length > 16) {       //checks for password length
+            regPassword.error = "Please, enter 8 to 16 characters"
             regPassword.requestFocus()
             isPressed = false
-        }else if (name.isEmpty()) {
-            regEmail.error = "Please enter your Name"
-            regEmail.requestFocus()
-            isPressed = false
-        }else if (lastName.isEmpty()) {
-            regName.error = "Please enter your Last Name"
-            regName.requestFocus()
-            isPressed = false
-        }else if (phone.isEmpty()) {
-            regName.error = "Please enter your Last Name"
-            regName.requestFocus()
+        } else if (!isPasswordValid(password)){
+            regPassword.error = "At least: 1 capital letter, 1 number and one symbol"
+            regPassword.requestFocus()
             isPressed = false
         }
-        else if (postal.isEmpty()) {
-            regPostal.error = "Please enter your Postal Code"
-            regPostal.requestFocus()
-            isPressed = false
-        } else {
+        else {
 
         regProgressBar.visibility= View.VISIBLE
 
@@ -132,4 +119,15 @@ class RegisterActivity : AppCompatActivity() {
             }
         }
     }
+
+    private fun isPasswordValid(password: String?) : Boolean {
+        password?.let {
+            val passwordPattern = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{4,}$"
+            val passwordMatcher = Regex(passwordPattern)
+
+            return passwordMatcher.find(password) != null
+        } ?: return false
+    }
+
+
 }
