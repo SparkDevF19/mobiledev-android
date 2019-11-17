@@ -26,6 +26,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import java.io.IOException
+import java.sql.Types.NULL
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
 
@@ -242,10 +243,14 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
                 e.printStackTrace()
             }
             // add location to list of addresses and place a marker on the location that the user typed in
-            val address = addressList!![0]
-            val latLng = LatLng(address.latitude, address.longitude)
-            mMap.addMarker(MarkerOptions().position(latLng).title(location))
-            mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng))
+            var address:Address? = null
+            if(addressList != null && addressList.size > 0){
+                address = addressList[0]
+                val latLng = LatLng(address.latitude, address.longitude)
+                mMap.addMarker(MarkerOptions().position(latLng).title(location))
+                mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng))
+            }
+
             // Toast.makeText(
             //     applicationContext,
             //     address.latitude.toString() + " " + address.longitude,
