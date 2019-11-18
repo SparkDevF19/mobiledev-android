@@ -13,11 +13,8 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
-import com.google.android.gms.common.GooglePlayServicesNotAvailableException
-import com.google.android.gms.common.GooglePlayServicesRepairableException
 import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.*
-import com.google.android.gms.location.places.ui.PlacePicker
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -26,7 +23,6 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import java.io.IOException
-import java.sql.Types.NULL
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
 
@@ -38,11 +34,93 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
     private lateinit var locationRequest: LocationRequest
     private var locationUpdateState = false
 
-
     companion object{
         private const val LOCATION_PERMISSION_REQUEST_CODE = 1
         private const val REQUEST_CHECK_SETTINGS = 2
-        private const val PLACE_PICKER_REQUEST = 3
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_maps)
+        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+        val mapFragment = supportFragmentManager
+            .findFragmentById(R.id.map) as SupportMapFragment
+        mapFragment.getMapAsync(this)
+
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+        locationCallback = object : LocationCallback() {
+            override fun onLocationResult(p0: LocationResult) {
+                super.onLocationResult(p0)
+
+                lastLocation = p0.lastLocation
+                // placeMarkerOnMap(LatLng(lastLocation.latitude, lastLocation.longitude))
+            }
+        }
+        createLocationRequest()
+    }
+
+    private fun setUpMap() {
+        if (ActivityCompat.checkSelfPermission(this,
+                android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,
+                arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION), LOCATION_PERMISSION_REQUEST_CODE)
+            return
+        }
+
+        mMap.isMyLocationEnabled = true
+
+        fusedLocationClient.lastLocation.addOnSuccessListener(this) { location ->
+            // Got last known location. In some rare situations this can be null.
+            if (location != null) {
+                lastLocation = location
+                val currentLatLng = LatLng(location.latitude, location.longitude)
+//                placeMarkerOnMap(currentLatLng)
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 12f))
+            }
+        }
+    }
+
+    /**
+     * Manipulates the map once available.
+     * This callback is triggered when the map is ready to be used.
+     * This is where we can add markers or lines, add listeners or move the camera. In this case,
+     * we just add a marker near Sydney, Australia.
+     * If Google Play services is not installed on the device, the user will be prompted to install
+     * it inside the SupportMapFragment. This method will only be triggered once the user has
+     * installed Google Play services and returned to the app.
+     */
+
+    override fun onMapReady(googleMap: GoogleMap) {
+        mMap = googleMap
+        mMap.uiSettings.isZoomControlsEnabled = true
+        mMap.setOnMarkerClickListener(this)
+        setUpMap()
+
+        // isMyLocationEnabled = true enables the my-location layer which draws a light blue dot on the user’s location.
+        // It also adds a button to the map that, when tapped, centers the map on the user’s location.
+        mMap.isMyLocationEnabled = true
+
+        // Gives you the most recent location currently available.
+        fusedLocationClient.lastLocation.addOnSuccessListener(this) { location ->
+            // If you were able to retrieve the the most recent location, then move the camera to the user’s current location.
+            if (location != null) {
+                lastLocation = location
+                val currentLatLng = LatLng(location.latitude, location.longitude)
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 12f))
+            }
+        }
+
+        //Add a marker in Sydney and move the camera
+//            val FIU = LatLng(-25.8, -80.4)
+//            mMap.addMarker(MarkerOptions().position(FIU).title("Marker in Florida International University"))
+//            mMap.moveCamera(CameraUpdateFactory.newLatLng(FIU))
+    }
+
+    private fun placeMarkerOnMap(location: LatLng) {
+        // Create a MarkerOptions object and sets the user’s current location as the position for the marker
+        val markerOptions = MarkerOptions().position(location)
+        // add the marker to the map
+        mMap.addMarker(markerOptions)
     }
 
     private fun startLocationUpdates() {
@@ -88,73 +166,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         }
     }
 
-
-    private fun loadPlacePicker() {
-        val builder = PlacePicker.IntentBuilder()
-
-        try {
-            startActivityForResult(builder.build(this@MapsActivity), PLACE_PICKER_REQUEST)
-        } catch (e: GooglePlayServicesRepairableException) {
-            e.printStackTrace()
-        } catch (e: GooglePlayServicesNotAvailableException) {
-            e.printStackTrace()
-        }
-    }
-
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_maps)
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        val mapFragment = supportFragmentManager
-            .findFragmentById(R.id.map) as SupportMapFragment
-        mapFragment.getMapAsync(this)
-//        val fab = findViewById<FloatingActionButton>(R.id.fab)
-//        fab.setOnClickListener {
-//            loadPlacePicker()
-//        }
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
-        locationCallback = object : LocationCallback() {
-            override fun onLocationResult(p0: LocationResult) {
-                super.onLocationResult(p0)
-
-                lastLocation = p0.lastLocation
-                // placeMarkerOnMap(LatLng(lastLocation.latitude, lastLocation.longitude))
-            }
-        }
-        createLocationRequest()
-
-    }
-
-    private fun setUpMap() {
-        if (ActivityCompat.checkSelfPermission(this,
-                android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this,
-                arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION), LOCATION_PERMISSION_REQUEST_CODE)
-            return
-        }
-
-        mMap.isMyLocationEnabled = true
-
-        fusedLocationClient.lastLocation.addOnSuccessListener(this) { location ->
-            // Got last known location. In some rare situations this can be null.
-            if (location != null) {
-                lastLocation = location
-                val currentLatLng = LatLng(location.latitude, location.longitude)
-                //placeMarkerOnMap(currentLatLng)
-                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 12f))
-            }
-        }
-    }
-
-    private fun placeMarkerOnMap(location: LatLng) {
-        // Create a MarkerOptions object and sets the user’s current location as the position for the marker
-        val markerOptions = MarkerOptions().position(location)
-        // add the marker to the map
-        mMap.addMarker(markerOptions)
-    }
-
-    // 1
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_CHECK_SETTINGS) {
@@ -163,64 +174,18 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
                 startLocationUpdates()
             }
         }
-        if (requestCode == PLACE_PICKER_REQUEST) {
-            if (resultCode == RESULT_OK) {
-                val place = PlacePicker.getPlace(this, data)
-                var addressText = place.name.toString()
-                addressText += "\n" + place.address.toString()
-
-                placeMarkerOnMap(place.latLng)
-            }
-        }
     }
 
-    // 2
     override fun onPause() {
         super.onPause()
         fusedLocationClient.removeLocationUpdates(locationCallback)
     }
 
-    // 3
     public override fun onResume() {
         super.onResume()
         if (!locationUpdateState) {
             startLocationUpdates()
         }
-    }
-
-    /**
-     * Manipulates the map once available.
-     * This callback is triggered when the map is ready to be used.
-     * This is where we can add markers or lines, add listeners or move the camera. In this case,
-     * we just add a marker near Sydney, Australia.
-     * If Google Play services is not installed on the device, the user will be prompted to install
-     * it inside the SupportMapFragment. This method will only be triggered once the user has
-     * installed Google Play services and returned to the app.
-     */
-    override fun onMapReady(googleMap: GoogleMap) {
-        mMap = googleMap
-        mMap.uiSettings.isZoomControlsEnabled = true
-        mMap.setOnMarkerClickListener(this)
-        setUpMap()
-
-        // isMyLocationEnabled = true enables the my-location layer which draws a light blue dot on the user’s location.
-        // It also adds a button to the map that, when tapped, centers the map on the user’s location.
-        mMap.isMyLocationEnabled = true
-
-        // Gives you the most recent location currently available.
-        fusedLocationClient.lastLocation.addOnSuccessListener(this) { location ->
-            // If you were able to retrieve the the most recent location, then move the camera to the user’s current location.
-            if (location != null) {
-                lastLocation = location
-                val currentLatLng = LatLng(location.latitude, location.longitude)
-                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 12f))
-            }
-        }
-
-        //Add a marker in Sydney and move the camera
-//            val FIU = LatLng(-25.8, -80.4)
-//            mMap.addMarker(MarkerOptions().position(FIU).title("Marker in Florida International University"))
-//            mMap.moveCamera(CameraUpdateFactory.newLatLng(FIU))
     }
 
     // used to search for whatever location the user types in the search box, using geocoding
@@ -244,10 +209,11 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
             }
             // add location to list of addresses and place a marker on the location that the user typed in
             var address:Address? = null
-            if(addressList != null && addressList.size > 0){
+            if(addressList != null && addressList.isNotEmpty()){
                 address = addressList[0]
                 val latLng = LatLng(address.latitude, address.longitude)
-                mMap.addMarker(MarkerOptions().position(latLng).title(location))
+                placeMarkerOnMap(latLng)
+                //mMap.addMarker(MarkerOptions().position(latLng).title(location))
                 mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng))
             }
 
