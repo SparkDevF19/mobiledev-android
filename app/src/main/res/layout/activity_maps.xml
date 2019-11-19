@@ -1,36 +1,30 @@
-<fragment xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:map="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/map"
-    android:name="com.google.android.gms.maps.SupportMapFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.sparkdev.uber.MapsActivity" >
-    <LinearLayout
+
+    <fragment
         android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        />
+
+    <SearchView
+        android:id="@+id/sv_location"
+        android:layout_width="290dp"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/edittext_bg"
+        android:elevation="5dp"
+        android:iconifiedByDefault="false"
+        android:queryHint="@string/where_to" />
 
-        <!--search box-->
-        <EditText
-            android:layout_width="248dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/search_location"
-            android:layout_weight="0.5"
-            android:elevation="5dp"
-            android:layout_margin="10dp"
-            android:inputType="textPersonName"
-            android:hint="@string/where_to"
-            android:background="@drawable/edittext_bg"/>
-
-        <!--search button, calls the geocoding function in the main activity-->
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.5"
-            android:layout_margin="10dp"
-            android:onClick="searchLocation"
-            android:text="@string/search" />
-
-    </LinearLayout>
-</fragment>
+</RelativeLayout>
