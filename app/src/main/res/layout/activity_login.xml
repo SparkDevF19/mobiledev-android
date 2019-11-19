@@ -106,16 +106,16 @@
                 <TextView
                     android:id="@+id/loginRecover"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="31dp"
                     android:layout_marginBottom="5dp"
-                    android:text="Trouble Login in?"
+                    android:text="Having trouble logging in?"
                     android:textColor="@color/colorPrimaryDark"
                     android:visibility="visible" />
 
                 <TextView
                     android:id="@+id/loginSend"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="49dp"
                     android:text="Don't have an account? Register here" />
 
 
