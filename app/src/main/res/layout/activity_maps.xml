@@ -48,4 +48,8 @@
         map:layout_constraintStart_toStartOf="@+id/map"
         map:layout_constraintTop_toTopOf="@+id/map" />
 
+    <include
+        layout="@layout/activity_home"
+        android:visibility="gone"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
