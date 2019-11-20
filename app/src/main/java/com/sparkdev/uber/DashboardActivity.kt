@@ -22,5 +22,10 @@ class DashboardActivity : AppCompatActivity() {
             startActivity(Intent(this, LoginActivity::class.java))
             finish()
         }
+        // request a ride -> map screen
+        requestRide.setOnClickListener {
+            startActivity(Intent(this, MapsActivity::class.java))
+            finish()
+        }
     }
 }
