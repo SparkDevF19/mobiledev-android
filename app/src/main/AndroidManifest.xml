@@ -50,6 +50,8 @@
         </activity>
         <activity android:name="com.example.driverlocation.MainActivity">
         </activity>
+        <activity android:name=".NavigationActivity">
+        </activity>
     </application>
 
 
