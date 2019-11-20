@@ -13,6 +13,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import com.google.android.gms.common.api.ResolvableApiException
+import com.google.android.gms.common.api.Status
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -21,14 +22,19 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
-import kotlinx.android.synthetic.main.activity_maps.*
+import com.google.android.libraries.places.api.Places
+import com.google.android.libraries.places.api.model.Place
+import com.google.android.libraries.places.widget.AutocompleteSupportFragment
+import com.google.android.libraries.places.widget.listener.PlaceSelectionListener
 import java.io.IOException
+import java.util.*
 
 
-class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
-
+class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener, PlaceSelectionListener {
     // called when marker is clicked or tapped
     override fun onMarkerClick(p0: Marker?) = false
+
+    private lateinit var autocompleteFragment: AutocompleteSupportFragment
 
     // lateinit = used to declare a variable without initializing it in the constructor
     // map object
@@ -60,7 +66,18 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_maps)
-        val searchView : SearchView = findViewById(R.id.sv_location)
+
+        if (!Places.isInitialized()) {
+            Places.initialize(applicationContext, getString(R.string.google_maps_key), Locale.US)
+        }
+
+        Places.createClient(this)
+
+        autocompleteFragment = supportFragmentManager.findFragmentById(R.id.autocomplete_fragment)
+                as AutocompleteSupportFragment
+        autocompleteFragment.setOnPlaceSelectedListener(this)
+
+        autocompleteFragment.setPlaceFields(listOf(Place.Field.ID, Place.Field.NAME))
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         mapFragment = supportFragmentManager
@@ -79,47 +96,14 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         createLocationRequest()
 
         mapFragment.getMapAsync(this)
+    }
 
-        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+    override fun onPlaceSelected(p0: Place) {
+        // TODO
+    }
 
-            override fun onQueryTextChange(newText: String): Boolean {
-                return false
-            }
-
-            override fun onQueryTextSubmit(query: String): Boolean {
-                // task HERE
-                val location = searchView.query.toString()
-                var addressList: List<Address>? = null
-
-                if (location == null || location == "") {
-                    Toast.makeText(
-                        applicationContext,
-                        "Please provide a location",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                } else {
-                    val geoCoder = Geocoder(this@MapsActivity)
-                    try {
-                        addressList = geoCoder.getFromLocationName(location, 1)
-                    } catch (e: IOException) {
-                        e.printStackTrace()
-                    }
-                    // add location to list of addresses and place a marker on the location that the user typed in
-                    var address: Address? = null
-                    if (addressList != null && addressList.isNotEmpty()) {
-                        address = addressList[0]
-                        val latLng = LatLng(address.latitude, address.longitude)
-                        placeMarkerOnMap(latLng)
-                        map.animateCamera(CameraUpdateFactory.newLatLng(latLng))
-                    }
-                    return false
-                }
-                return true
-            }
-        })
-        nav_button.setOnClickListener {
-            startActivity(Intent(this, NavigationActivity::class.java))
-        }
+    override fun onError(p0: Status) {
+        // TODO
     }
 
     private fun setUpMap() {

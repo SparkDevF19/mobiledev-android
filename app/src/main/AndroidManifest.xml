@@ -27,16 +27,16 @@
         -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyAMBDi4E13sH_gZDTa0YVHi-fl4ainlgog" />
+            android:value="@string/google_maps_key" />
 
         <activity
             android:name=".LoginActivity">
 <!--            android:label="Map">-->
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+<!--                <action android:name="android.intent.action.VIEW" />-->
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
         </activity>
 		<activity android:name=".PaymentActivity">
         <activity android:name=".RecoverActivity">
@@ -46,6 +46,11 @@
         <activity android:name=".RegisterActivity">
         </activity>
         <activity android:name=".MapsActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity android:name=".HomeActivity">
         </activity>
