@@ -70,7 +70,7 @@ class LoginActivity : AppCompatActivity() {
             return
         }
         if (loginPassword.text.toString().isEmpty()){       //if password is empty
-            loginPassword.error = "Please enter you password"
+            loginPassword.error = "Please enter your password"
             loginPassword.requestFocus()
             isPressed = false
             return
