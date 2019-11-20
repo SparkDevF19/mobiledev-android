@@ -4,6 +4,82 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".mainActivity">
+    tools:context=".MainActivity">
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/profile-icon-png-image-free-download-searchpngcom-profile-icon-png-673_673"
+        tools:layout_editor_absoluteX="82dp"
+        tools:layout_editor_absoluteY="126dp" />
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/profile-icon-png-image-free-download-searchpngcom-profile-icon-png-673_673"
+        tools:layout_editor_absoluteX="129dp"
+        tools:layout_editor_absoluteY="235dp" />
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="121dp"
+        android:layout_height="255dp"
+        android:src="@drawable/profilePic"
+        tools:layout_editor_absoluteX="145dp"
+        tools:layout_editor_absoluteY="272dp" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="FL SUX"
+        android:textSize="30sp"
+        tools:layout_editor_absoluteX="157dp"
+        tools:layout_editor_absoluteY="608dp" />
+
+    <ImageView
+        android:id="@+id/imageView6"
+        android:layout_width="150dp"
+        android:layout_height="64dp"
+        android:src="@drawable/rect"
+        tools:layout_editor_absoluteX="130dp"
+        tools:layout_editor_absoluteY="595dp" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="5 Min Away"
+        tools:layout_editor_absoluteX="300dp"
+        tools:layout_editor_absoluteY="379dp" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Steve"
+        android:textSize="25sp"
+        tools:layout_editor_absoluteX="174dp"
+        tools:layout_editor_absoluteY="467dp" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="954-678-7424"
+        android:textSize="30sp"
+        tools:layout_editor_absoluteX="113dp"
+        tools:layout_editor_absoluteY="674dp" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Blue Prius"
+        android:textSize="30sp"
+        tools:layout_editor_absoluteX="138dp"
+        tools:layout_editor_absoluteY="537dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -48,6 +48,12 @@
         </activity>
         <activity android:name=".HomeActivity">
         </activity>
+        <activity android:name="com.example.driverlocation.MainActivity">
+        </activity>
     </application>
+
+
+
+
 
 </manifest>
