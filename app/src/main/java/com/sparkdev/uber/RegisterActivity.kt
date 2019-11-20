@@ -11,6 +11,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_register.*
+import java.util.regex.Pattern
 
 
 class RegisterActivity : AppCompatActivity() {
@@ -21,6 +22,10 @@ class RegisterActivity : AppCompatActivity() {
     private lateinit var dbReference: DatabaseReference
 
     var isPressed: Boolean = false
+
+    private var passwordPattern = Pattern.compile(
+        "^" + ".{6,}" +  "$"             //at least 6 characters
+    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,6 +64,7 @@ class RegisterActivity : AppCompatActivity() {
         val lastName: String = regLast.text.toString()
         val postal: String = regPostal.text.toString()
 
+
         //The following check for each box to see if empty and return if so.
         if (email.isEmpty()) {
             regEmail.error = "Please enter your Email"
@@ -70,6 +76,10 @@ class RegisterActivity : AppCompatActivity() {
             isPressed = false
         }else if (password.isEmpty()) {
             regPassword.error = "Please enter your Password"
+            regPassword.requestFocus()
+            isPressed = false
+        }else if (!passwordPattern.matcher(password).matches()) {
+            regPassword.error = "Password must be longer than 6 characters"
             regPassword.requestFocus()
             isPressed = false
         }else if (name.isEmpty()) {
