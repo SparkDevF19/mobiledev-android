@@ -39,6 +39,8 @@
 
     </androidx.cardview.widget.CardView>
 
+<!--    <include layout="@layout/activity_nav"/>-->
+
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/appCompatImageView"
         android:layout_width="46dp"
@@ -49,4 +51,6 @@
         map:layout_constraintStart_toStartOf="@+id/map"
         map:layout_constraintTop_toTopOf="@+id/map" />
 
+
 </androidx.constraintlayout.widget.ConstraintLayout>
+

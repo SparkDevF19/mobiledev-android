@@ -5,6 +5,11 @@
     <string name="where_to">Where To?</string>
     <string name="search">Search</string>
 
+
+    <!--    navigation  -->
+    <string name="navigation_drawer_open">Open</string>
+    <string name="navigation_drawer_close">Close</string>
+
     <string name="title_activity_settings">Settings</string>
 
     <!-- Preference Titles -->
@@ -31,4 +36,16 @@
     <string name="sign_out_button">Sign Out...</string>
     <string name="change_email_text">Change E-mail:</string>
     <string name="change_name_text">Change Name:</string>
+    <string name="title_activity_navigation">NavigationActivity</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_slideshow">Slideshow</string>
+    <string name="menu_tools">Tools</string>
+    <string name="menu_share">Share</string>
+    <string name="menu_send">Send</string>
 </resources>
