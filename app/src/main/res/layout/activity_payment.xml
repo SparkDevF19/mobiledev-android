@@ -12,194 +12,104 @@
         IF NOT: remove
     -->
 
-    <RelativeLayout
-        android:id="@+id/header"
-        android:layout_width="436dp"
-        android:layout_height="258dp"
-        android:background="@color/colorAccent"
-        android:orientation="vertical"
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/payment_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="Preferred Payment Method"
+        android:background="?attr/colorAccent"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="16dp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <EditText
+            android:id="@+id/ccName"
+            android:layout_width="match_parent"
+            android:layout_height="51dp"
+            android:layout_marginBottom="25dp"
+            android:backgroundTint="@color/colorPrimaryDark"
+            android:ems="10"
+            android:hint="Cardholder's Name"
+            android:inputType="text"
+            android:text="Cardholder's Name"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="20dp" />
+
+        <EditText
+            android:id="@+id/expire"
+            android:layout_width="match_parent"
+            android:layout_height="51dp"
+            android:layout_marginBottom="25dp"
+            android:backgroundTint="@color/colorPrimaryDark"
+            android:ems="10"
+            android:hint="MM/YY"
+            android:inputType="number"
+            android:text="MM/YY"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="20dp" />
+
         <ImageView
-            android:id="@+id/logo"
-            android:layout_width="250dp"
-            android:layout_height="160dp"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginStart="94dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginTop="7dp"
-            android:layout_marginEnd="92dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_panther" />
+            android:id="@+id/cardType"
+            android:layout_width="match_parent"
+            android:layout_height="38dp"
+            android:visibility="gone"
+            app:srcCompat="@drawable/ic_amex" />
 
-        <TextView
-            android:id="@+id/rideFIU"
-            android:layout_width="276dp"
-            android:layout_height="60dp"
-            android:layout_below="@+id/logo"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="124dp"
-            android:layout_marginTop="2dp"
-            android:layout_marginEnd="36dp"
-            android:layout_marginBottom="13dp"
-            android:fontFamily="@font/bebasneue"
-            android:text="RideFIU"
-            android:textSize="90dp" />
-    </RelativeLayout>
+        <EditText
+            android:id="@+id/csv"
+            android:layout_width="match_parent"
+            android:layout_height="51dp"
+            android:layout_marginBottom="25dp"
+            android:backgroundTint="@color/colorPrimaryDark"
+            android:ems="10"
+            android:hint="CSV"
+            android:inputType="number"
+            android:text="CSV"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="20dp" />
 
-    <RelativeLayout
-        android:id="@+id/paymentheader"
-        android:layout_width="413dp"
-        android:layout_height="57dp"
-        android:background="@color/colorPrimaryDark"
-        android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/header">
+        <EditText
+            android:id="@+id/ccNum"
+            android:layout_width="match_parent"
+            android:layout_height="51dp"
+            android:layout_marginBottom="25dp"
+            android:backgroundTint="@color/colorPrimaryDark"
+            android:ems="10"
+            android:hint="Credit Card Number"
+            android:inputType="number"
+            android:text="Credit Card Number"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="20dp" />
 
-        <TextView
-            android:id="@+id/paymentmethod"
-            android:layout_width="316dp"
-            android:layout_height="43dp"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="50dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginTop="7dp"
-            android:layout_marginEnd="47dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginBottom="7dp"
-            android:gravity="center"
-            android:text="Preferred Payment Method"
+        <Button
+            android:id="@+id/addCardButt"
+            android:layout_width="260dp"
+            android:layout_height="47dp"
+            android:layout_marginBottom="48dp"
+            android:width="1dp"
+            android:background="@drawable/rounded_butt"
+            android:backgroundTint="@color/colorPrimaryDark"
+            android:fontFamily="serif"
+            android:text="Add Card"
+            android:textAllCaps="false"
             android:textColor="@color/colorPrimary"
-            android:textSize="20dp"
-            app:layout_constraintTop_toTopOf="parent" />
-    </RelativeLayout>
-
-    <Button
-        android:id="@+id/addCardButt"
-        android:layout_width="260dp"
-        android:layout_height="47dp"
-        android:layout_marginStart="150dp"
-        android:layout_marginEnd="150dp"
-        android:layout_marginBottom="48dp"
-        android:width="1dp"
-        android:background="@drawable/rounded_butt"
-        android:backgroundTint="@color/colorPrimaryDark"
-        android:fontFamily="serif"
-        android:text="Add Card"
-        android:textAllCaps="false"
-        android:textColor="@color/colorPrimary"
-        android:textSize="30dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.503"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <EditText
-        android:id="@+id/expire"
-        android:layout_width="333dp"
-        android:layout_height="51dp"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:layout_marginStart="40dp"
-        android:layout_marginEnd="39dp"
-        android:layout_marginBottom="16dp"
-        android:backgroundTint="@color/colorPrimaryDark"
-        android:ems="10"
-        android:hint="MM/YY"
-        android:inputType="number"
-        android:text="MM/YY"
-        android:textColor="@color/colorPrimaryDark"
-        android:textSize="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/csv"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <EditText
-        android:id="@+id/ccName"
-        android:layout_width="333dp"
-        android:layout_height="51dp"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:layout_marginBottom="16dp"
-        android:backgroundTint="@color/colorPrimaryDark"
-        android:ems="10"
-        android:hint="Cardholder's Name"
-        android:inputType="text"
-        android:text="Cardholder's Name"
-        android:textColor="@color/colorPrimaryDark"
-        android:textSize="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/expire"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <EditText
-        android:id="@+id/csv"
-        android:layout_width="333dp"
-        android:layout_height="51dp"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:layout_marginStart="40dp"
-        android:layout_marginEnd="39dp"
-        android:layout_marginBottom="48dp"
-        android:backgroundTint="@color/colorPrimaryDark"
-        android:ems="10"
-        android:hint="CSV"
-        android:inputType="number"
-        android:text="CSV"
-        android:textColor="@color/colorPrimaryDark"
-        android:textSize="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/addCardButt"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <EditText
-        android:id="@+id/ccNum"
-        android:layout_width="333dp"
-        android:layout_height="51dp"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:layout_marginTop="100dp"
-        android:layout_marginBottom="10dp"
-        android:backgroundTint="@color/colorPrimaryDark"
-        android:ems="10"
-        android:hint="Credit Card Number"
-        android:inputType="number"
-        android:text="Credit Card Number"
-        android:textColor="@color/colorPrimaryDark"
-        android:textSize="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/ccName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.487"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/paymentheader"
-        app:layout_constraintVertical_bias="1.0" />
-
-    <ImageView
-        android:id="@+id/cardType"
-        android:layout_width="64dp"
-        android:layout_height="38dp"
-        android:layout_marginTop="31dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:visibility="gone"
-        app:layout_constraintHorizontal_bias="0.861"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/paymentheader"
-        app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/ic_amex" />
+            android:textSize="30dp" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
