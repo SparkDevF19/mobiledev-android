@@ -8,10 +8,14 @@ import android.location.Address
 import android.location.Geocoder
 import android.location.Location
 import android.os.Bundle
+import android.view.Gravity
+import android.view.View
 import android.widget.SearchView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.app.ActivityCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.common.api.Status
 import com.google.android.gms.location.*
@@ -57,6 +61,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
 
     private lateinit var mapFragment: SupportMapFragment
 
+    private lateinit var navButton: AppCompatImageView
+    private lateinit var drawer: DrawerLayout
+
     // companion object = function/property that is tied to a class rather than to instances of it
     companion object {
         private const val LOCATION_PERMISSION_REQUEST_CODE = 1
@@ -65,7 +72,13 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_maps)
+        setContentView(R.layout.activity_nav)
+
+        drawer = findViewById(R.id.drawer_layout)
+        navButton = findViewById(R.id.appCompatImageView)
+        navButton.setOnClickListener( View.OnClickListener {
+            drawer.openDrawer(Gravity.LEFT)
+        })
 
         if (!Places.isInitialized()) {
             Places.initialize(applicationContext, getString(R.string.google_maps_key), Locale.US)
