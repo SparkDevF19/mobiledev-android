@@ -9,12 +9,14 @@ import android.location.Geocoder
 import android.location.Location
 import android.os.Bundle
 import android.view.Gravity
+import android.view.MenuItem
 import android.view.View
 import android.widget.SearchView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.app.ActivityCompat
+import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.common.api.Status
@@ -30,11 +32,19 @@ import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener
+import com.google.android.material.navigation.NavigationView
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import java.io.IOException
 import java.util.*
 
 
-class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener, PlaceSelectionListener {
+class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener,
+    PlaceSelectionListener, NavigationView.OnNavigationItemSelectedListener {
+
+    private val auth: FirebaseAuth = FirebaseAuth.getInstance()
+    private val user: FirebaseUser? = auth.currentUser
+
     // called when marker is clicked or tapped
     override fun onMarkerClick(p0: Marker?) = false
 
@@ -63,6 +73,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
 
     private lateinit var navButton: AppCompatImageView
     private lateinit var drawer: DrawerLayout
+    private lateinit var navigationView: NavigationView
 
     // companion object = function/property that is tied to a class rather than to instances of it
     companion object {
@@ -77,8 +88,11 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         drawer = findViewById(R.id.drawer_layout)
         navButton = findViewById(R.id.appCompatImageView)
         navButton.setOnClickListener( View.OnClickListener {
-            drawer.openDrawer(Gravity.LEFT)
+            drawer.openDrawer(GravityCompat.START)
         })
+
+        navigationView = findViewById(R.id.nav_view)
+        navigationView.setNavigationItemSelectedListener(this)
 
         if (!Places.isInitialized()) {
             Places.initialize(applicationContext, getString(R.string.google_maps_key), Locale.US)
@@ -117,6 +131,36 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
 
     override fun onError(p0: Status) {
         // TODO
+    }
+
+    override fun onNavigationItemSelected(p0: MenuItem): Boolean {
+        when (p0.itemId) {
+            R.id.nav_profile -> {
+                editProfile()
+            }
+            R.id.nav_payment -> {
+                // TODO
+            }
+            R.id.nav_logout -> {
+                signOut()
+            }
+        }
+        drawer.closeDrawer(GravityCompat.START)
+        return true
+    }
+
+    private fun signOut() {
+        Toast.makeText(this, "Signed Out!", Toast.LENGTH_LONG)
+//        auth.signOut()
+        val intent: Intent = Intent(this, LoginActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
+
+    private fun editProfile() {
+        val intent: Intent = Intent(this, EditProfileActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 
     private fun setUpMap() {

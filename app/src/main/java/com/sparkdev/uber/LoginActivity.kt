@@ -13,7 +13,7 @@ import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : AppCompatActivity() {
 
-    private lateinit var auth: FirebaseAuth
+    internal lateinit var auth: FirebaseAuth
     var isPressed: Boolean = false //this will help prevent the user from pressing the button multiple times while
                                     //the app is waiting for the server to respond
 
@@ -52,7 +52,6 @@ class LoginActivity : AppCompatActivity() {
         if (currentUser != null) {
             updateUI(currentUser)
         }
-
     }
 
     private fun doLogin(){
@@ -111,5 +110,4 @@ class LoginActivity : AppCompatActivity() {
             isPressed = false
         }
     }
-
 }
