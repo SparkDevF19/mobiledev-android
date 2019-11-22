@@ -25,7 +25,7 @@ class SettingsActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         val userName: TextView = findViewById(R.id.userName)
         val userEmail: TextView = findViewById(R.id.userEmail)
-        val userNumber: TextView = findViewById(R.id.userPhoneNumber)
+//        val userNumber: TextView = findViewById(R.id.userPhoneNumber)
         val signOutButton: Button = findViewById(R.id.SignOutButton)
         val editProfileButton: Button = findViewById(R.id.EditProfButton)
         val homeAddress: EditText = findViewById(R.id.HomeAddress)
