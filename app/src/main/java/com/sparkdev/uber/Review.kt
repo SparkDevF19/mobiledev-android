@@ -1,4 +1,9 @@
 package com.sparkdev.uber
 
-class Review {
-}
+import java.util.*
+
+data class Review(val Date: Date,
+                  val Driver_ID: String,
+                  val Score: Int,
+                  val Tip: Double,
+                  val User_ID: String)

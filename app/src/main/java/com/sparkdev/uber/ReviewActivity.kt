@@ -3,8 +3,16 @@ package com.sparkdev.uber
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import java.util.*
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.LocalTime
+import java.time.Month
+import java.time.format.DateTimeFormatter
+import java.time.format.FormatStyle
 
 
 class ReviewActivity : AppCompatActivity()
@@ -14,30 +22,33 @@ class ReviewActivity : AppCompatActivity()
     private lateinit var database: FirebaseDatabase
     private lateinit var dbReference: DatabaseReference
 
+    private val driver: Driver = Driver("3u85h2tgu3fu",
+                                          "jsmit123@fiu.edu",
+                                        "John",
+                                        "Smith",
+                                     "305-123-4567",
+                                       "33174",
+                                         listOf<Review>(),
+                                            40,
+                                       8,
+                                        10)
 
-    private var driverRating: Int
-        get()
-        {
-            return driverRating
-        }
-        set(newDriverRating)
-        {
-            driverRating = newDriverRating
-        }
+    private val user = auth.currentUser
 
-    private var tipAmount: Double
-        get()
-        {
-            return tipAmount
-        }
-        set(newTipAmount)
-        {
-            tipAmount = newTipAmount
-        }
+    private var driverRating = 0
+    private var tipAmount = 0.0
+
+    private var newDriverScore = 0.0
+    private var allReviewScores: List<Int> = emptyList()
 
     private var isPressed: Boolean = false
+
     private var driverID: String = ""
     private var userID: String = ""
+
+    private var rawDate: LocalDateTime = LocalDateTime.now()
+    private var formattedDate: String = rawDate.format(DateTimeFormatter.ofPattern("M/d/y"))
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,8 +58,9 @@ class ReviewActivity : AppCompatActivity()
 
         database = FirebaseDatabase.getInstance()
         auth = FirebaseAuth.getInstance()
-    }
 
+        dbReference = database.reference.child("driver")
+    }
 
     private fun verifyCustomTip()
     {
@@ -66,6 +78,13 @@ class ReviewActivity : AppCompatActivity()
         //}
     }
 
+    private fun getInfo()
+    {
+        userID = user?.uid!!
+        driverRating = 5
+        tipAmount = 1.00
+        newDriverScore = calculateScore(allReviewScores)
+    }
 
     private fun uploadReview()
     {
@@ -77,6 +96,28 @@ class ReviewActivity : AppCompatActivity()
         //make a new review in the database for the driver with the above mentioned values
         //verify review data and tip amount were successfully sent
         //output to the user a message thanking them for their review or let them know something went wrong and to try again now or later
+
+        dbReference.child("Review").child("Date").setValue(formattedDate)
+        dbReference.child("Review").child("Driver_ID").setValue(driverID)
+        dbReference.child("Review").child("Score").setValue(driverRating)
+        dbReference.child("Review").child("Tip").setValue(tipAmount)
+        dbReference.child("Review").child("User_ID").setValue(userID)
+    }
+
+    private fun calculateScore(allScores: List<Int>): Double
+    {
+        var avgScore = 0.0
+        var totalScore = 0
+        var numOfScores = 0
+
+        allScores.forEach {
+            numOfScores++
+            totalScore += it
+        }
+
+        avgScore = (totalScore/numOfScores).toDouble()
+
+        return avgScore
     }
 
 }
