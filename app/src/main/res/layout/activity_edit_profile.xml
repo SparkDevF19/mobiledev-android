@@ -6,79 +6,109 @@
     android:layout_height="match_parent"
     tools:context=".EditProfileActivity">
 
-    <Button
-        android:id="@+id/SaveChangesButton"
-        android:layout_width="wrap_content"
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/edit_profile_toolbar"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="476dp"
-        android:text="Save Changes"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/ChangePasswordButton"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <Button
-        android:id="@+id/ChangePasswordButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Change Password..."
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.869"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.669" />
+        app:title="Edit Profile"/>
 
-    <TextView
-        android:id="@+id/ChangeEmailText"
-        android:layout_width="134dp"
-        android:layout_height="31dp"
-        android:text="@string/change_email_text"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display2"
-        app:autoSizeTextType="uniform"
-        app:fontFamily="sans-serif-medium"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.103"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.088" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <EditText
-        android:id="@+id/ChangeEmailField"
-        android:layout_width="354dp"
-        android:layout_height="41dp"
-        android:ems="10"
-        android:inputType="textEmailAddress"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/ChangeEmailText"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.19" />
+        <TextView
+            android:id="@+id/ChangeNameText"
+            android:layout_width="134dp"
+            android:layout_height="31dp"
+            android:layout_marginStart="29dp"
+            android:layout_marginTop="21dp"
+            android:layout_marginEnd="248dp"
+            android:layout_marginBottom="25dp"
+            android:text="@string/change_name_text"
+            app:autoSizeTextType="uniform"
+            app:layout_constraintBottom_toTopOf="@+id/changeNameField"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ChangeEmailField" />
 
-    <TextView
-        android:id="@+id/ChangeNameText"
-        android:layout_width="134dp"
-        android:layout_height="31dp"
-        android:text="@string/change_name_text"
-        app:autoSizeTextType="uniform"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/ChangeEmailText"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.284" />
+        <EditText
+            android:id="@+id/changeNameField"
+            android:layout_width="346dp"
+            android:layout_height="57dp"
+            android:layout_marginStart="29dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginEnd="36dp"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="Name"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ChangeNameText" />
 
-    <EditText
-        android:id="@+id/changeNameField"
-        android:layout_width="346dp"
-        android:layout_height="57dp"
-        android:layout_marginEnd="36dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Name"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.391" />
+        <Button
+            android:id="@+id/SaveChangesButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="253dp"
+            android:layout_marginTop="18dp"
+            android:layout_marginEnd="31dp"
+            android:text="Save Changes"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ChangePasswordButton" />
+
+        <EditText
+            android:id="@+id/ChangeEmailField"
+            android:layout_width="354dp"
+            android:layout_height="41dp"
+            android:layout_marginStart="29dp"
+            android:layout_marginTop="31dp"
+            android:layout_marginEnd="28dp"
+            android:layout_marginBottom="21dp"
+            android:ems="10"
+            android:inputType="textEmailAddress"
+            app:layout_constraintBottom_toTopOf="@+id/ChangeNameText"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ChangeEmailText" />
+
+        <Button
+            android:id="@+id/ChangePasswordButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="209dp"
+            android:layout_marginTop="118dp"
+            android:layout_marginEnd="31dp"
+            android:layout_marginBottom="18dp"
+            android:text="Change Password..."
+            app:layout_constraintBottom_toTopOf="@+id/SaveChangesButton"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/changeNameField" />
+
+        <TextView
+            android:id="@+id/ChangeEmailText"
+            android:layout_width="134dp"
+            android:layout_height="31dp"
+            android:layout_marginStart="29dp"
+            android:layout_marginTop="55dp"
+            android:text="@string/change_email_text"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+            app:autoSizeTextType="uniform"
+            app:fontFamily="sans-serif-medium"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
